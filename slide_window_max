@@ -1,0 +1,26 @@
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        result = []
+        j = 0
+        index = 0
+        current_max = nums[0]
+        while j < k:
+            if nums[j] > current_max:
+                current_max = nums[j]
+                index = j
+            j += 1
+
+        result.append(current_max) #accounts for first max of first sliding window
+
+        for i in range(j, len(nums)):
+            if index < i:
+                current_max = nums[i -k + 1]
+                for x in range(i - k + 1, i + 1):
+                    if nums[x] > current_max:
+                        current_max = nums[x]
+                        index = x
+            current_max = max(current_max, nums[i])
+            result.append(current_max)
+        return result
+
+        
